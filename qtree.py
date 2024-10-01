@@ -5,9 +5,10 @@ from scipy.stats import qmc
 
 
 class Point:
-    def __init__(self, x: float, y: float):
+    def __init__(self, x: float, y: float, tag: int):
         self.x = x
         self.y = y
+        self.tag = tag
 
 
 class Node:
@@ -35,8 +36,8 @@ class QTree:
         self.points = []
         self.root = Node(0, 0, n, n, self.points)
 
-    def add_point(self, x: float, y: float):
-        self.points.append(Point(x, y))
+    def add_point(self, x: float, y: float, tag: int):
+        self.points.append(Point(x, y, tag))
 
     def get_points(self) -> List[Point]:
         return self.points

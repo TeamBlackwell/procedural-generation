@@ -1,3 +1,4 @@
+from enum import Enum
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
@@ -6,8 +7,16 @@ from scipy.stats import qmc
 from typing import Tuple
 
 
+class Tag(Enum):
+    SKYSCRAPER = 1
+    HOUSE = 2
+
+
 def sample_poisson_disk(
-    dimension: int, scale: int, density: int = 8, n_buildings: int = 25
+    dimension: int,
+    scale: int,
+    density: int = 18,
+    n_buildings: int = 25,
 ) -> Tuple[npt.NDArray, npt.NDArray]:
     """
     Samples using the poisson disk algorithm
