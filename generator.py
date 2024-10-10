@@ -22,11 +22,11 @@ class Generator(object):
     ):
         """
         :param dimension: the dimension of the generator
-        :param sampling_fnc: the random function used for sampling
-        :complex_buildings: this tells us if the buildings should be rectangles or combined rectangles
-        :sampling_kwargs: function arguments for the sampling function
-        :scale: this is the factor by which the map should be expanded
-        :debug: useful to see the output of the generator
+        :param sampling_fnc: the random function used for sampling. 3 tuple in which first one is function Callable.
+            Second is complex_buildings: this tells us if the buildings should be rectangles or combined rectangles
+            Third is sampling_kwargs: function arguments for the sampling function
+        :param scale: this is the factor by which the map should be expanded
+        :param debug: useful to see the output of the generator
         """
         self.debug = debug
         self.dimension = 2
