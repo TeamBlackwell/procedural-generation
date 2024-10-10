@@ -155,6 +155,7 @@ def get_bounds_of_house(
 
     return x1, y1, x2, y2
 
+
 def batch_export(path, *, n_exports=60):
     """
     path: the path to the directory where you need to export
@@ -167,10 +168,11 @@ def batch_export(path, *, n_exports=60):
                 (sample_poisson_disk, Tag.HOUSE, {"density": 15, "n_buildings": 75}),
             ],
         )
-        proc_gen.generate_sample()    
+        proc_gen.generate_sample()
         proc_gen.export(f"{path}/sample-{i}.npy")
 
-if False: #__name__ != "__main__":
+
+if False:  # __name__ != "__main__":
 
     proc_gen = Generator(
         2,
