@@ -22,11 +22,11 @@ class Generator(object):
     ):
         """
         :param dimension: the dimension of the generator
-        :param sampling_fnc: the random function used for sampling
-        :complex_buildings: this tells us if the buildings should be rectangles or combined rectangles
-        :sampling_kwargs: function arguments for the sampling function
-        :scale: this is the factor by which the map should be expanded
-        :debug: useful to see the output of the generator
+        :param sampling_fnc: the random function used for sampling. 3 tuple in which first one is function Callable.
+            Second is complex_buildings: this tells us if the buildings should be rectangles or combined rectangles
+            Third is sampling_kwargs: function arguments for the sampling function
+        :param scale: this is the factor by which the map should be expanded
+        :param debug: useful to see the output of the generator
         """
         print("hello")
         self.debug = debug
@@ -162,6 +162,7 @@ def get_bounds_of_house(
 
     return x1, y1, x2, y2
 
+
 def batch_export(path, *, n_exports=60):
     """
     path: the path to the directory where you need to export
@@ -174,11 +175,12 @@ def batch_export(path, *, n_exports=60):
                 (sample_poisson_disk, Tag.HOUSE, {"density": 15, "n_buildings": 75}),
             ],
         )
-        print(proc_gen)
-        proc_gen.generate_sample()    
+        proc_gen.generate_sample()
         proc_gen.export(f"{path}/sample-{i}.npy")
 
-if __name__ != "__main__":
+
+if False:  # __name__ != "__main__":
+
     proc_gen = Generator(
         2,
         [
