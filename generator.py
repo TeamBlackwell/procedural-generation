@@ -28,12 +28,15 @@ class Generator(object):
         :scale: this is the factor by which the map should be expanded
         :debug: useful to see the output of the generator
         """
+        print("hello")
         self.debug = debug
-        self.dimension = 2
+        self.dimension = dimension
         self.scale = scale
         self.buildings = []
 
         self.sampling_fncs = sampling_fncs
+        print(sampling_fncs)
+        print(dimension)
         for _, _, sampling_kwargs in sampling_fncs:
             if "scale" not in sampling_kwargs:
                 sampling_kwargs["scale"] = scale
@@ -53,9 +56,11 @@ class Generator(object):
         self.qtree.subdivide()
         if self.debug:
             self.debug_ax[0][1] = self.qtree.plot(self.debug_ax[0][1])
+            self.debug_ax[0][0].legend(["Skyscrapers", "Houses"])
         self.populate_with_buildings()
         if show:
             plt.show()
+            print("hello")
 
     def get_sample_from_sampling_fnc(self, sampling_fnc, sampling_kwargs):
         X, Y = sampling_fnc(**sampling_kwargs)
@@ -124,7 +129,8 @@ def make_buildings(tag, node, *, debug=False) -> List[npt.NDArray]:
 def make_square_buildings(node, *, debug):
     point = Point(node.x0 + node.width // 2, node.y0 + node.height // 2, 3)
     x1, y1, x2, y2 = get_bounds_of_house(point, node)
-    return [np.array([x1, y1, x2, y2])]
+    height = np.random.random() * 10 + 20
+    return [np.array([x1, y1, x2, y2, height])]
 
 
 def make_house_buildings(node, *, debug):
@@ -138,7 +144,8 @@ def make_house_buildings(node, *, debug):
         x1, y1, x2, y2 = get_bounds_of_house(
             point, node, width_equal_height=False, factor=6, alpha=0.3
         )
-        ans.append(np.array([x1, y1, x2, y2]))
+        height = 10
+        ans.append(np.array([x1, y1, x2, y2, height]))
     return ans
 
 
@@ -162,16 +169,16 @@ def batch_export(path, *, n_exports=60):
     for i in range(n_exports):
         proc_gen = Generator(
             2,
-            [
+            sampling_fncs=[
                 (sample_poisson_disk, Tag.SKYSCRAPER, {"density": 28}),
                 (sample_poisson_disk, Tag.HOUSE, {"density": 15, "n_buildings": 75}),
             ],
         )
+        print(proc_gen)
         proc_gen.generate_sample()    
         proc_gen.export(f"{path}/sample-{i}.npy")
 
-if False: #__name__ != "__main__":
-
+if __name__ != "__main__":
     proc_gen = Generator(
         2,
         [
@@ -181,6 +188,7 @@ if False: #__name__ != "__main__":
         debug=True,
     )
     proc_gen.generate_sample(show=True)
+    plt.show()
 
 if __name__ == "__main__":
     batch_export("sample_data", n_exports=10)
